@@ -1,13 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 
 public class PipeLogic : MonoBehaviour
 {
     private Rigidbody2D _body;
     private ObjectPool<PipeLogic> _pipePool;
+    
+    [HideInInspector]
+    public GameManagerScript gameManager;
+    
+    [Tooltip("Speed of the pipe")]
     [SerializeField] private float _pipeSpeed;
+    
+    [Tooltip("Indicates how much points to add")]
+    [SerializeField] private int _pipeScoreValue;
+    
 
     public void SetPool(ObjectPool<PipeLogic> pool)
     {
@@ -27,5 +35,10 @@ public class PipeLogic : MonoBehaviour
         {
             _pipePool.Release(this);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        gameManager.AddScorePoint(_pipeScoreValue);
     }
 }

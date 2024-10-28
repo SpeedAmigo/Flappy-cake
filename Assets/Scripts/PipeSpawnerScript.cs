@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 public class PipeSpawnerScript : MonoBehaviour
 {
+    [SerializeField] private GameManagerScript _gameManagerScript;
     [SerializeField] private GameObject pipePrefab;
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private float yRange;
@@ -46,6 +47,7 @@ public class PipeSpawnerScript : MonoBehaviour
     {
         var pipeInstance = Instantiate(pipePrefab,new Vector2(transform.position.x, RandomPipePosition()), Quaternion.identity).GetComponent<PipeLogic>();
         pipeInstance.SetPool(_pipePool);
+        pipeInstance.gameManager = _gameManagerScript; // adds reference to gameManager
         return pipeInstance;
     }
 
