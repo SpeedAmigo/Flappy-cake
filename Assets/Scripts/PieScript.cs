@@ -18,6 +18,14 @@ public class PieScript : MonoBehaviour
             _body.velocity = _body.velocity.normalized * _maxSpeed;
         }
     }
+
+    private void Die()
+    {
+        if (godMode) return;
+        _collider.enabled = false;
+        _isAlive = false;
+        _director.Play();
+    }
     private void Start()
     {
         _body = GetComponent<Rigidbody2D>();
@@ -30,18 +38,14 @@ public class PieScript : MonoBehaviour
         {
             Fly();
         }
+
+        if (transform.position.y < -6 || transform.position.y > 6)
+        {
+            Die();
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!godMode)
-        {
-            _collider.enabled = false;
-            _isAlive = false;
-            _director.Play();  
-        }
-        else
-        {
-            return;
-        }
+        Die();
     }
 }
