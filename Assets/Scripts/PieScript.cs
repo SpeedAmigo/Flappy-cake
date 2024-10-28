@@ -39,7 +39,7 @@ public class PieScript : MonoBehaviour
             Fly();
         }
 
-        if (transform.position.y < -6 || transform.position.y > 6)
+        if (transform.position.y is < -6 or > 6) // this is the same as || statement
         {
             Die();
         }
