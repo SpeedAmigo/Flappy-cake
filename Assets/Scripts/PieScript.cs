@@ -1,14 +1,18 @@
 using UnityEngine;
 using UnityEngine.Playables;
+
 public class PieScript : MonoBehaviour
 {
     private Rigidbody2D _body;
     private PolygonCollider2D _collider;
     private bool _isAlive = true;
+    private float xMin = -20f, xMax = 20f;
     [SerializeField] private bool godMode;
     [SerializeField] private int _flyForce;
     [SerializeField] private float _maxSpeed;
+    [SerializeField] private float _rotationSpeed;
     [SerializeField] PlayableDirector _director;
+    
     private void Fly()
     {
         _body.AddForce(Vector3.up * (_flyForce * 100));
@@ -26,6 +30,22 @@ public class PieScript : MonoBehaviour
         _isAlive = false;
         _director.Play();
     }
+
+    private void PieRotation()
+    {
+        float pieVelocity = _body.velocity.y;
+        
+        // Determin target angle based on upward or downward movement
+        float targetAngle = Mathf.Clamp(pieVelocity * _rotationSpeed, -20f, 20f);
+
+        // Smoothly rotate towards the target angle
+        Quaternion targetRotation = Quaternion.Euler(0, 0, targetAngle);
+        gameObject.transform.rotation = Quaternion.Lerp(
+            gameObject.transform.rotation,
+            targetRotation, 
+            Time.deltaTime * _rotationSpeed);
+    }
+    
     private void Start()
     {
         _body = GetComponent<Rigidbody2D>();
@@ -43,7 +63,10 @@ public class PieScript : MonoBehaviour
         {
             Die();
         }
+        
+        PieRotation();
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Die();
