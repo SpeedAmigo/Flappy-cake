@@ -6,7 +6,6 @@ public class PieScript : MonoBehaviour
     private Rigidbody2D _body;
     private PolygonCollider2D _collider;
     private bool _isAlive = true;
-    private float xMin = -20f, xMax = 20f;
     [SerializeField] private bool godMode;
     [SerializeField] private int _flyForce;
     [SerializeField] private float _maxSpeed;
@@ -35,7 +34,7 @@ public class PieScript : MonoBehaviour
     {
         float pieVelocity = _body.velocity.y;
         
-        // Determin target angle based on upward or downward movement
+        // Determine target angle based on upward or downward movement
         float targetAngle = Mathf.Clamp(pieVelocity * _rotationSpeed, -20f, 20f);
 
         // Smoothly rotate towards the target angle

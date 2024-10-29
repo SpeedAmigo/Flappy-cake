@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    private int _currentScore = 0;
+    private int _currentScore;
     private AudioSource _audioSource;
     
-    [SerializeField] private List<AudioClip> _scoreSound = new List<AudioClip>();
+    [SerializeField] private List<AudioClip> _scoreSound = new();
 
     public static event Action<int> OnScorePoint; // event to score points
     
